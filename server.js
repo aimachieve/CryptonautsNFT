@@ -5,8 +5,7 @@ const passport = require("passport");
 const cors = require('cors');
 
 const users = require("./routes/api/users");
-
-
+const router = express.Router();
 const app = express();
 
 // Bodyparser middleware
@@ -17,12 +16,12 @@ app.use(
 );
 app.use(bodyParser.json());
 
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors());
+// const corsOptions ={
+//     origin:'http://localhost:3000', 
+//     credentials:true,            //access-control-allow-credentials:true
+//     optionSuccessStatus:200
+// }
+// app.use(cors());
 
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -42,6 +41,15 @@ require("./config/passport")(passport);
 // Routes
 app.use("/api/account", users);
 
+router.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" ); 
+});
+
+app.use(router);
 
 const port = process.env.PORT || 5000;
 
