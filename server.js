@@ -32,6 +32,9 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes
+app.use("/", () => {
+  res.json(['fdsafdsfsda']);
+});
 app.use("/api/account", users);
 
 
